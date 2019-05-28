@@ -6,70 +6,70 @@ import static org.springframework.http.HttpStatus.*
 
 
 @Secured(['ROLE_ADMIN', 'ROLE_USER'])
-class OpcionController {
+class PreguntaController {
 
-    OpcionService opcionService
+    PreguntaService preguntaService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond opcionService.list(params), model:[opcionCount: opcionService.count()]
+        respond preguntaService.list(params), model:[preguntaCount: preguntaService.count()]
     }
 
     def show(Long id) {
-        respond opcionService.get(id)
+        respond preguntaService.get(id)
     }
 
     def create() {
-        respond new Opcion(params)
+        respond new Pregunta(params)
     }
 
-    def save(Opcion opcion) {
-        if (opcion == null) {
+    def save(Pregunta pregunta) {
+        if (pregunta == null) {
             notFound()
             return
         }
 
         try {
-            opcionService.save(opcion)
+            preguntaService.save(pregunta)
         } catch (ValidationException e) {
-            respond opcion.errors, view:'create'
+            respond pregunta.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'opcion.label', default: 'Opcion'), opcion.id])
-                redirect opcion
+                flash.message = message(code: 'default.created.message', args: [message(code: 'pregunta.label', default: 'Pregunta'), pregunta.id])
+                redirect pregunta
             }
-            '*' { respond opcion, [status: CREATED] }
+            '*' { respond pregunta, [status: CREATED] }
         }
     }
 
     def edit(Long id) {
-        respond opcionService.get(id)
+        respond preguntaService.get(id)
     }
 
-    def update(Opcion opcion) {
-        if (opcion == null) {
+    def update(Pregunta pregunta) {
+        if (pregunta == null) {
             notFound()
             return
         }
 
         try {
-            opcionService.save(opcion)
+            preguntaService.save(pregunta)
         } catch (ValidationException e) {
-            respond opcion.errors, view:'edit'
+            respond pregunta.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'opcion.label', default: 'Opcion'), opcion.id])
-                redirect opcion
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'pregunta.label', default: 'Pregunta'), pregunta.id])
+                redirect pregunta
             }
-            '*'{ respond opcion, [status: OK] }
+            '*'{ respond pregunta, [status: OK] }
         }
     }
 
@@ -79,11 +79,11 @@ class OpcionController {
             return
         }
 
-        opcionService.delete(id)
+        preguntaService.delete(id)
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'opcion.label', default: 'Opcion'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'pregunta.label', default: 'Pregunta'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -93,7 +93,7 @@ class OpcionController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'opcion.label', default: 'Opcion'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'pregunta.label', default: 'Pregunta'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

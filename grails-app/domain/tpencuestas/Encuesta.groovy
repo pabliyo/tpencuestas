@@ -5,14 +5,14 @@ class Encuesta {
     String titulo
     long numeroTotalVotaciones
 
-    static hasMany = [ opciones : Opcion ]
+    static hasMany = [preguntas: Pregunta ]
 
     static constraints = {
         titulo(blank:false)
     }
 
     static mapping = {
-        opciones(cascade:"all-delete-orphan", sort:"id")
+        preguntas(cascade:"all-delete-orphan", sort:"id")
     }
 
 }

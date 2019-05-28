@@ -9,8 +9,8 @@ class BootStrap {
 
         8.times { encuestaIndex ->
             Encuesta encuesta = new Encuesta(titulo: "Encuesta ${encuestaIndex}")
-            2.times { opcionIndex ->
-             encuesta.addToOpciones(titulo: "Titulo ${encuestaIndex} - ${opcionIndex}" )
+            2.times { preguntaIndex ->
+             encuesta.addToPreguntas(titulo: "Titulo ${encuestaIndex} - ${preguntaIndex}" )
             }
            encuesta.save()
 

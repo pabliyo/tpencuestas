@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class OpcionControllerSpec extends Specification implements ControllerUnitTest<OpcionController>, DomainUnitTest<Opcion> {
+class PreguntaControllerSpec extends Specification implements ControllerUnitTest<PreguntaController>, DomainUnitTest<Pregunta> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
+        controller.preguntaService = Mock(PreguntaService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -26,8 +26,8 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.index()
 
         then:"The model is correct"
-        !model.opcionList
-        model.opcionCount == 0
+        !model.preguntaList
+        model.preguntaCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -35,7 +35,7 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.create()
 
         then:"The model is correctly created"
-        model.opcion!= null
+            model.pregunta!= null
     }
 
     void "Test the save action with a null instance"() {
@@ -45,14 +45,14 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/opcion/index'
+        response.redirectedUrl == '/pregunta/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * save(_ as Opcion)
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * save(_ as Pregunta)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,38 +60,38 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def opcion = new Opcion(params)
-        opcion.id = 1
+        def pregunta = new Pregunta(params)
+        pregunta.id = 1
 
-        controller.save(opcion)
+        controller.save(pregunta)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/opcion/show/1'
+        response.redirectedUrl == '/pregunta/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * save(_ as Opcion) >> { Opcion opcion ->
-                throw new ValidationException("Invalid instance", opcion.errors)
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * save(_ as Pregunta) >> { Pregunta pregunta ->
+                throw new ValidationException("Invalid instance", pregunta.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def opcion = new Opcion()
-        controller.save(opcion)
+        def pregunta = new Pregunta()
+        controller.save(pregunta)
 
         then:"The create view is rendered again with the correct model"
-        model.opcion != null
+        model.pregunta != null
         view == 'create'
     }
 
     void "Test the show action with a null id"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
+        controller.preguntaService = Mock(PreguntaService) {
             1 * get(null) >> null
         }
 
@@ -104,20 +104,20 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
 
     void "Test the show action with a valid id"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * get(2) >> new Opcion()
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * get(2) >> new Pregunta()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.opcion instanceof Opcion
+        model.pregunta instanceof Pregunta
     }
 
     void "Test the edit action with a null id"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
+        controller.preguntaService = Mock(PreguntaService) {
             1 * get(null) >> null
         }
 
@@ -130,15 +130,15 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * get(2) >> new Opcion()
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * get(2) >> new Pregunta()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.opcion instanceof Opcion
+        model.pregunta instanceof Pregunta
     }
 
 
@@ -149,14 +149,14 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/opcion/index'
+        response.redirectedUrl == '/pregunta/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * save(_ as Opcion)
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * save(_ as Pregunta)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,31 +164,31 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def opcion = new Opcion(params)
-        opcion.id = 1
+        def pregunta = new Pregunta(params)
+        pregunta.id = 1
 
-        controller.update(opcion)
+        controller.update(pregunta)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/opcion/show/1'
+        response.redirectedUrl == '/pregunta/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
-            1 * save(_ as Opcion) >> { Opcion opcion ->
-                throw new ValidationException("Invalid instance", opcion.errors)
+        controller.preguntaService = Mock(PreguntaService) {
+            1 * save(_ as Pregunta) >> { Pregunta pregunta ->
+                throw new ValidationException("Invalid instance", pregunta.errors)
             }
         }
 
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Opcion())
+        controller.update(new Pregunta())
 
         then:"The edit view is rendered again with the correct model"
-        model.opcion != null
+        model.pregunta != null
         view == 'edit'
     }
 
@@ -199,13 +199,13 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/opcion/index'
+        response.redirectedUrl == '/pregunta/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.opcionService = Mock(OpcionService) {
+        controller.preguntaService = Mock(PreguntaService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class OpcionControllerSpec extends Specification implements ControllerUnitTest<O
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/opcion/index'
+        response.redirectedUrl == '/pregunta/index'
         flash.message != null
     }
 }

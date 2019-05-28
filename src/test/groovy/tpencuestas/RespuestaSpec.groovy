@@ -3,7 +3,7 @@ package tpencuestas
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class OpcionSpec extends Specification implements DomainUnitTest<Opcion> {
+class RespuestaSpec extends Specification implements DomainUnitTest<Respuesta> {
 
     def setup() {
     }

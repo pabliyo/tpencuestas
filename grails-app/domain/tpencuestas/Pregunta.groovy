@@ -1,6 +1,6 @@
 package tpencuestas
 
-class Opcion {
+class Pregunta {
 
     String titulo
     long numeroVotaciones
