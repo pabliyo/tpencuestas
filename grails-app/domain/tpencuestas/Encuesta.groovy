@@ -3,6 +3,8 @@ package tpencuestas
 class Encuesta {
 
     String titulo
+    Vigencia vigencia
+
 
     static hasMany = [preguntas: Pregunta ]
 
